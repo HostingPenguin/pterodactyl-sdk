@@ -4,6 +4,8 @@ A sdk for the api of the populair open-source game server management panel.
 
 ## TODO
 
+The Pterodactyl api contains a ton of endpoints which all have to be implemented. Follow the progress below:
+
 -   [ ] [/api/client] Client
     -   [ ] [/account] Account
         -   [ ] GET [/] Account details
