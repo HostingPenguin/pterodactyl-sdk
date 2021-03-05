@@ -1,1 +1,1 @@
-# -hostingpenguin-pterodactyl-sdk
+# @hostingpengu.in/pterodactyl-sdk
