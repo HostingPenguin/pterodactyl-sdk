@@ -66,6 +66,6 @@ A sdk for the api of the populair open-source game server management panel.
         -   [ ] [/settings] Settings
             -   [ ] POST [/rename] Rename server
             -   [ ] POST [/reinstall] Reinstall server
-    -   [x] [/] List servers
-    -   [x] [/permissions] List permissions
+    -   [x] [/] ~~List servers~~
+    -   [x] [/permissions] ~~List permissions~~
 -   [ ] [/api/application] Application
