@@ -11,7 +11,7 @@ export class PermissionMapper {
      * @returns {Permission} permission model.
      */
     private static mapToPermission(object: PterodactylPermission): Permission {
-        let permission = new Permission();
+        const permission = new Permission();
 
         permission.description = object.description;
         permission.keys = object.keys;
@@ -25,8 +25,8 @@ export class PermissionMapper {
      * @returns {ClientPermissions}
      */
     public static mapToClientPermissions(object: PterodactylObject<PterodactylPermissions>): ClientPermissions {
-        let permissions = object.attributes.permissions;
-        let clientPermissions = new ClientPermissions();
+        const permissions = object.attributes.permissions;
+        const clientPermissions = new ClientPermissions();
 
         clientPermissions.websocket = this.mapToPermission(permissions.websocket);
         clientPermissions.control = this.mapToPermission(permissions.control);

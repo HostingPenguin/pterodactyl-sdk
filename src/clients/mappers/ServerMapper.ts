@@ -9,8 +9,8 @@ export class ServerMapper {
      * @returns
      */
     public static mapToServer(object: PterodactylObject<PterodactylServer>): Server {
-        let server = new Server();
-        return;
+        const server = new Server();
+        return server;
     }
 
     /**

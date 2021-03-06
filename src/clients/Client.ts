@@ -50,21 +50,21 @@ export class Client extends ApiClient {
      */
     private _getServers(page?: number): Promise<Server[]> {
         return new Promise((resolve, reject) => {
-            let queryParams = [];
+            const queryParams = [];
 
             if (page !== undefined) queryParams.push(`page=${page}`);
 
-            let query = queryParams.join("&");
-            let urlPostfix = queryParams.length > 0 ? `?${query}` : "";
+            const query = queryParams.join("&");
+            const urlPostfix = queryParams.length > 0 ? `?${query}` : "";
 
             this.restClient
                 .get<PterodactylList<PterodactylServer>>(`/api/client${urlPostfix}`)
                 .then((response) => {
-                    var pterodactylList = response.data;
-                    var meta = pterodactylList.meta;
-                    var servers = ServerMapper.mapToServers(pterodactylList.data);
+                    const pterodactylList = response.data;
+                    const meta = pterodactylList.meta;
+                    const servers = ServerMapper.mapToServers(pterodactylList.data);
 
-                    if (meta.pagination.current_page < meta.pagination.total_pages) {
+                    if (meta !== undefined && meta.pagination.current_page < meta.pagination.total_pages) {
                         this._getServers(meta.pagination.current_page + 1).then((subServers) => {
                             resolve(servers.concat(subServers));
                         });
@@ -86,8 +86,8 @@ export class Client extends ApiClient {
             this.restClient
                 .get<PterodactylObject<PterodactylPermissions>>(`/api/client/permissions`)
                 .then((response) => {
-                    var pterodactylObject = response.data;
-                    var permissions = PermissionMapper.mapToClientPermissions(pterodactylObject);
+                    const pterodactylObject = response.data;
+                    const permissions = PermissionMapper.mapToClientPermissions(pterodactylObject);
                     resolve(permissions);
                 })
                 .catch((error) => {
