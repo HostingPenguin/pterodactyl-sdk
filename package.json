@@ -1,5 +1,5 @@
 {
-    "name": "@hostingpenguin/pterodactyl-sdk",
+    "name": "@hostingpengu.in/pterodactyl-sdk",
     "version": "0.0.1",
     "description": "A sdk for the Pterodactyl game panel software",
     "main": "lib/index.js",
@@ -18,7 +18,7 @@
         "type": "git",
         "url": "git+https://github.com/HostingPenguin/pterodactyl-sdk.git"
     },
-    "author": "bram.hoven@hostingpengu.in",
+    "author": "Bram Hoven",
     "keywords": [
         "Pterodactyl",
         "sdk",
