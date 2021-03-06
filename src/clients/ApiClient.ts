@@ -1,7 +1,6 @@
 import { AxiosRequestConfig } from "axios";
 import { Credentials } from "../interfaces/Credentials";
 import { Options } from "../interfaces/Options";
-import { PterodactylResponse } from "./models/PterodactylResponse";
 import { RestClient } from "./RestClient";
 
 const apiConfig: AxiosRequestConfig = {
