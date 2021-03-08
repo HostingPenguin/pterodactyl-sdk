@@ -1,18 +1,23 @@
 import { Client } from "../Client";
-import { Credentials } from "../../interfaces/Credentials";
-import { Options } from "../../interfaces/Options";
+import { Credentials } from "../interfaces/Credentials";
+import { Options } from "../interfaces/Options";
 
 const options: Options = { baseUrl: process.env.BASE_URL };
 const credentials: Credentials = { apiKey: process.env.API_KEY };
 
 test("Initialize client", () => {
-    let apiClient: Client = new Client(options, credentials);
-    expect(apiClient).toBeDefined();
+    let client: Client = new Client(options, credentials);
+    expect(client).toBeDefined();
+});
+
+test("Get server client", () => {
+    let client: Client = new Client(options, credentials);
+    expect(client.servers).toBeDefined();
 });
 
 test("Get servers", () => {
-    let apiClient: Client = new Client(options, credentials);
-    return apiClient
+    let client: Client = new Client(options, credentials);
+    return client
         .getServers()
         .then((servers) => {
             expect(servers).toBeDefined;
@@ -21,8 +26,8 @@ test("Get servers", () => {
 });
 
 test("Get permissions", () => {
-    let apiClient: Client = new Client(options, credentials);
-    return apiClient
+    let client: Client = new Client(options, credentials);
+    return client
         .getPermissions()
         .then((permissions) => {
             expect(permissions).toBeDefined();

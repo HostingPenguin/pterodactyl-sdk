@@ -30,7 +30,7 @@ yarn test
 
 👤 **Bram Hoven**
 
-* Github: [@bramhoven](https://github.com/bramhoven)
+-   Github: [@bramhoven](https://github.com/bramhoven)
 
 ## Show your support
 

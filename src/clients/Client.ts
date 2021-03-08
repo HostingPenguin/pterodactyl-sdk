@@ -1,6 +1,6 @@
-import { Credentials } from "../interfaces/Credentials";
-import { Options } from "../interfaces/Options";
-import { Server } from "../models/servers/Server";
+import { Credentials } from "./interfaces/Credentials";
+import { Options } from "./interfaces/Options";
+import { Server } from "../models/client/server/Server";
 import { ClientPermissions } from "../models/permissions/ClientPermissions";
 import { ApiClient } from "./ApiClient";
 import { ServerMapper } from "./mappers/ServerMapper";
@@ -9,8 +9,14 @@ import { PterodactylObject } from "./models/PterodactylObject";
 import { PterodactylList } from "./models/PterodactylList";
 import { PterodactylServer } from "./models/pterodactyl/PterodactylServer";
 import { PterodactylPermissions } from "./models/pterodactyl/permissions/PterodactylPermissions";
+import { ServerClient } from "./sub-clients/ServerClient";
 
 export class Client extends ApiClient {
+    /**
+     * The server client to access the client's server endpoints.
+     */
+    public servers: ServerClient;
+
     /**
      * Creates an instance of the client.
      * @param {Options} options
@@ -18,6 +24,8 @@ export class Client extends ApiClient {
      */
     constructor(options: Options, credentials: Credentials) {
         super(options, credentials);
+
+        this.servers = new ServerClient(options, credentials);
     }
 
     //#region public methods
@@ -26,18 +34,14 @@ export class Client extends ApiClient {
      * Gets all the servers.
      */
     public getServers(): Promise<Server[]> {
-        return new Promise((resolve, reject) => {
-            this._getServers().then(resolve).catch(reject);
-        });
+        return this._getServers();
     }
 
     /**
      * Gets all the client permissions.
      */
     public getPermissions(): Promise<ClientPermissions> {
-        return new Promise((resolve, reject) => {
-            this._getPermissions().then(resolve).catch(reject);
-        });
+        return this._getPermissions();
     }
 
     //#endregion

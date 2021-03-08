@@ -54,10 +54,7 @@ export class RestClient {
      * @returns {Promise<R>} HTTP `axios` response payload.
      * @memberof Api
      */
-    public post<T, B, R = AxiosResponse<T>>(
-        path: string,
-        data?: B
-    ): Promise<R> {
+    public post<T, B, R = AxiosResponse<T>>(path: string, data?: B): Promise<R> {
         return this.client.post(path, data);
     }
 
@@ -91,10 +88,7 @@ export class RestClient {
      * @returns {Promise<R>} HTTP `axios` response payload.
      * @memberof Api
      */
-    public patch<T, B, R = AxiosResponse<T>>(
-        path: string,
-        data?: B
-    ): Promise<R> {
+    public patch<T, B, R = AxiosResponse<T>>(path: string, data?: B): Promise<R> {
         return this.client.patch(path, data);
     }
 }

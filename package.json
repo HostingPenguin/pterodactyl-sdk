@@ -6,7 +6,7 @@
     "types": "lib/index.d.ts",
     "scripts": {
         "test": "jest --config jestconfig.json",
-        "test:verbose": "jest --config jestconfig.json --silent=false",
+        "test:verbose": "jest --config jestconfig.json --verbose --silent=false",
         "build": "tsc",
         "format": "prettier --write \"src/**/*.ts\"",
         "lint": "tslint -p tsconfig.json",

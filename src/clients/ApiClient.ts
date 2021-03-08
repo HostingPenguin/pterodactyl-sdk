@@ -1,14 +1,14 @@
 import { AxiosRequestConfig } from "axios";
-import { Credentials } from "../interfaces/Credentials";
-import { Options } from "../interfaces/Options";
+import { Credentials } from "./interfaces/Credentials";
+import { Options } from "./interfaces/Options";
 import { RestClient } from "./RestClient";
 
 const apiConfig: AxiosRequestConfig = {
     timeout: 10000,
     headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
-    },
+        Accept: "application/json"
+    }
 };
 
 export class ApiClient {

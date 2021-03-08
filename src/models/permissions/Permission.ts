@@ -1,4 +1,4 @@
-export class Permission {
-    public description: string;
-    public keys: Map<string, string>;
+export interface Permission {
+    description: string;
+    keys: Map<string, string>;
 }

@@ -11,10 +11,10 @@ export class PermissionMapper {
      * @returns {Permission} permission model.
      */
     private static mapToPermission(object: PterodactylPermission): Permission {
-        const permission = new Permission();
-
-        permission.description = object.description;
-        permission.keys = object.keys;
+        const permission: Permission = {
+            description: object.description,
+            keys: object.keys
+        };
 
         return permission;
     }
@@ -26,18 +26,18 @@ export class PermissionMapper {
      */
     public static mapToClientPermissions(object: PterodactylObject<PterodactylPermissions>): ClientPermissions {
         const permissions = object.attributes.permissions;
-        const clientPermissions = new ClientPermissions();
-
-        clientPermissions.websocket = this.mapToPermission(permissions.websocket);
-        clientPermissions.control = this.mapToPermission(permissions.control);
-        clientPermissions.user = this.mapToPermission(permissions.user);
-        clientPermissions.file = this.mapToPermission(permissions.file);
-        clientPermissions.backup = this.mapToPermission(permissions.backup);
-        clientPermissions.allocation = this.mapToPermission(permissions.allocation);
-        clientPermissions.startup = this.mapToPermission(permissions.startup);
-        clientPermissions.database = this.mapToPermission(permissions.database);
-        clientPermissions.schedule = this.mapToPermission(permissions.schedule);
-        clientPermissions.settings = this.mapToPermission(permissions.settings);
+        const clientPermissions: ClientPermissions = {
+            websocket: this.mapToPermission(permissions.websocket),
+            control: this.mapToPermission(permissions.control),
+            user: this.mapToPermission(permissions.user),
+            file: this.mapToPermission(permissions.file),
+            backup: this.mapToPermission(permissions.backup),
+            allocation: this.mapToPermission(permissions.allocation),
+            startup: this.mapToPermission(permissions.startup),
+            database: this.mapToPermission(permissions.database),
+            schedule: this.mapToPermission(permissions.schedule),
+            settings: this.mapToPermission(permissions.settings)
+        };
 
         return clientPermissions;
     }

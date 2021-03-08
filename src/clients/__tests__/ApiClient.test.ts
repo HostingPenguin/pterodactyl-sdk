@@ -1,14 +1,11 @@
 import { ApiClient } from "../ApiClient";
-import { Credentials } from "../../interfaces/Credentials";
-import { Options } from "../../interfaces/Options";
+import { Credentials } from "../interfaces/Credentials";
+import { Options } from "../interfaces/Options";
+
+const options: Options = { baseUrl: process.env.BASE_URL };
+const credentials: Credentials = { apiKey: process.env.API_KEY };
 
 test("Initialize api client", () => {
-    let options: Options = { baseUrl: "test.test" };
-    let credentials: Credentials = {
-        apiKey: "TEST_KEY",
-    };
-
     let apiClient: ApiClient = new ApiClient(options, credentials);
-
     expect(apiClient).toBeDefined();
 });

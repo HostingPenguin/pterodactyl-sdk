@@ -1,8 +1,11 @@
 import { PterodactylList } from "../PterodactylList";
+import { PterodactylObject } from "../PterodactylObject";
+import { PterodactylAllocation } from "./PterodactylAllocation";
 
 export interface PterodactylServer {
     server_owner: boolean;
     identifier: string;
+    internal_id: number;
     uuid: string;
     name: string;
     node: string;
@@ -18,6 +21,9 @@ export interface PterodactylServer {
         io: number;
         cpu: number;
     };
+    invocation: string;
+    docker_image: string;
+    egg_features: any;
     feature_limits: {
         databases: number;
         allocations: number;
@@ -27,6 +33,6 @@ export interface PterodactylServer {
     is_installing: boolean;
     is_transferring: boolean;
     relationships: {
-        allocations: PterodactylList<any>;
+        allocations: PterodactylList<PterodactylAllocation>;
     };
 }
