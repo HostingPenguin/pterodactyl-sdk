@@ -53,3 +53,16 @@ test("Get console details", () => {
         })
         .catch(fail);
 });
+
+test("Get resource usage", () => {
+    let serverClient: ServerClient = new ServerClient(options, credentials);
+    return serverClient
+        .getResourceUsage(TEST_SERVER_ID)
+        .then((statistics) => {
+            expect(statistics).toBeDefined();
+            expect(statistics.currentState).toBeDefined();
+            expect(statistics.isSuspended).toBeDefined();
+            expect(statistics.resources).toBeDefined();
+        })
+        .catch(fail);
+});
