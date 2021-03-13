@@ -27,7 +27,9 @@ export class RelationshipMapper {
      * @param objects A list of Pterodactyl allocations objects.
      * @returns List of Allocations models.
      */
-    public static mapToAllocations(objects: PterodactylObject<PterodactylAllocation>[]): Allocation[] {
+    public static mapToAllocations(objects: PterodactylObject<PterodactylAllocation>[] | undefined): Allocation[] {
+        if (objects == undefined) return [];
+
         const allocations: Allocation[] = [];
         for (const pterodactylAllocation of objects) {
             allocations.push(this.mapToAllocation(pterodactylAllocation));

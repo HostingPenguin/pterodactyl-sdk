@@ -5,7 +5,7 @@ import { ServerClient } from "../sub-clients/ServerClient";
 import { PowerState } from "../../enums/PowerState";
 
 const options: Options = { baseUrl: process.env.BASE_URL };
-const credentials: Credentials = { apiKey: process.env.API_KEY };
+const credentials: Credentials = { apiKey: process.env.CLIENT_API_KEY };
 
 const TEST_SERVER_ID = process.env.TEST_SERVER_ID as string;
 

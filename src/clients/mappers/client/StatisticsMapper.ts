@@ -1,8 +1,8 @@
-import { Resources } from "../../models/client/Resources";
-import { Statistics } from "../../models/client/Statistics";
-import { PterodactylResources } from "../models/pterodactyl/resources/PterodactylResources";
-import { PterodactylStatistics } from "../models/pterodactyl/resources/PterodactylStatistics";
-import { PterodactylObject } from "../models/PterodactylObject";
+import { Resources } from "../../../models/client/Resources";
+import { Statistics } from "../../../models/client/Statistics";
+import { PterodactylResources } from "../../models/pterodactyl/resources/PterodactylResources";
+import { PterodactylStatistics } from "../../models/pterodactyl/resources/PterodactylStatistics";
+import { PterodactylObject } from "../../models/PterodactylObject";
 
 export class StatisticsMapper {
     /**

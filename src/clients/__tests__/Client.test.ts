@@ -3,7 +3,7 @@ import { Credentials } from "../interfaces/Credentials";
 import { Options } from "../interfaces/Options";
 
 const options: Options = { baseUrl: process.env.BASE_URL };
-const credentials: Credentials = { apiKey: process.env.API_KEY };
+const credentials: Credentials = { apiKey: process.env.CLIENT_API_KEY };
 
 test("Initialize client", () => {
     let client: Client = new Client(options, credentials);

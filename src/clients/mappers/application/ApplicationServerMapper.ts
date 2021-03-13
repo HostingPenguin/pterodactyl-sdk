@@ -1,30 +1,25 @@
-import { FeatureLimits } from "../../models/client/server/FeatureLimits";
-import { FtpDetails } from "../../models/client/server/FtpDetails";
-import { HardwareLimits } from "../../models/client/server/HardwareLimits";
-import { Server } from "../../models/client/server/Server";
-import { PterodactylServer } from "../models/pterodactyl/PterodactylServer";
-import { PterodactylObject } from "../models/PterodactylObject";
-import { RelationshipMapper } from "./RelationshipMapper";
+import { ApplicationServer } from "../../../models/application/server/ApplicationServer";
+import { PterodactylApplicationServer } from "../../models/pterodactyl/PterodactylApplicationServer";
+import { PterodactylObject } from "../../models/PterodactylObject";
+import { RelationshipMapper } from "../RelationshipMapper";
+import { ContainerMapper } from "./ContainerMapper";
 
-export class ServerMapper {
+export class ApplicationServerMapper {
     /**
-     * Maps a Pterodactyl server object to a Server model.
-     * @param obj the object.
+     * Maps a Pterodactyl server object to a ApplicationServer model.
+     * @param object the object.
      * @returns
      */
-    public static mapToServer(object: PterodactylObject<PterodactylServer>): Server {
+    public static mapToServer(object: PterodactylObject<PterodactylApplicationServer>): ApplicationServer {
         const pterodactylServer = object.attributes;
-        const server: Server = {
+        const server: ApplicationServer = {
             serverOwner: pterodactylServer.server_owner,
             identifier: pterodactylServer.identifier,
             internalId: pterodactylServer.internal_id,
+            externalId: pterodactylServer.external_id,
             uuid: pterodactylServer.uuid,
             name: pterodactylServer.name,
             node: pterodactylServer.node,
-            sftpDetails: {
-                ip: pterodactylServer.sftp_details.ip,
-                port: pterodactylServer.sftp_details.port
-            },
             description: pterodactylServer.description,
             limits: {
                 memory: pterodactylServer.limits.memory,
@@ -41,11 +36,19 @@ export class ServerMapper {
                 allocations: pterodactylServer.feature_limits.allocations,
                 backups: pterodactylServer.feature_limits.backups
             },
+            user: pterodactylServer.user,
+            allocation: pterodactylServer.allocation,
+            nest: pterodactylServer.nest,
+            egg: pterodactylServer.egg,
+            pack: pterodactylServer.pack,
+            container: ContainerMapper.mapToContainer(pterodactylServer.container),
             isSuspended: pterodactylServer.is_suspended,
             isInstalling: pterodactylServer.is_installing,
             isTransferring: pterodactylServer.is_transferring,
+            updatedAt: new Date(pterodactylServer.updated_at),
+            createdAt: new Date(pterodactylServer.created_at),
             relationships: {
-                allocations: RelationshipMapper.mapToAllocations(pterodactylServer.relationships.allocations.data),
+                allocations: RelationshipMapper.mapToAllocations(pterodactylServer.relationships?.allocations.data),
                 variables: null
             }
         };
@@ -54,12 +57,12 @@ export class ServerMapper {
     }
 
     /**
-     * Maps a list of Pterodactyl server objects to a list of Server models.
+     * Maps a list of Pterodactyl server objects to a list of ApplicationServer models.
      * @param objects a list of objects.
      * @returns
      */
-    public static mapToServers(objects: PterodactylObject<PterodactylServer>[]): Server[] {
-        const servers: Server[] = [];
+    public static mapToServers(objects: PterodactylObject<PterodactylApplicationServer>[]): ApplicationServer[] {
+        const servers: ApplicationServer[] = [];
         for (const pterodactylServer of objects) {
             servers.push(this.mapToServer(pterodactylServer));
         }

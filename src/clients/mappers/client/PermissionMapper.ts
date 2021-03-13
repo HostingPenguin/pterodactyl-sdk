@@ -1,8 +1,8 @@
-import { ClientPermissions } from "../../models/permissions/ClientPermissions";
-import { Permission } from "../../models/permissions/Permission";
-import { PterodactylPermission } from "../models/pterodactyl/permissions/PterodactylPermission";
-import { PterodactylPermissions } from "../models/pterodactyl/permissions/PterodactylPermissions";
-import { PterodactylObject } from "../models/PterodactylObject";
+import { ClientPermissions } from "../../../models/permissions/ClientPermissions";
+import { Permission } from "../../../models/permissions/Permission";
+import { PterodactylPermission } from "../../models/pterodactyl/permissions/PterodactylPermission";
+import { PterodactylPermissions } from "../../models/pterodactyl/permissions/PterodactylPermissions";
+import { PterodactylObject } from "../../models/PterodactylObject";
 
 export class PermissionMapper {
     /**

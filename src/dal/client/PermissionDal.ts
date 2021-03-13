@@ -1,4 +1,4 @@
-import { PermissionMapper } from "../../clients/mappers/PermissionMapper";
+import { PermissionMapper } from "../../clients/mappers/client/PermissionMapper";
 import { PterodactylPermissions } from "../../clients/models/pterodactyl/permissions/PterodactylPermissions";
 import { PterodactylObject } from "../../clients/models/PterodactylObject";
 import { ClientPermissions } from "../../models/permissions/ClientPermissions";

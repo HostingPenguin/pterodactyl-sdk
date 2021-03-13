@@ -1,12 +1,8 @@
 import { PowerState } from "../../enums/PowerState";
-import { ServerMapper } from "../../clients/mappers/ServerMapper";
-import { StatisticsMapper } from "../../clients/mappers/StatisticsMapper";
-import { WebsocketMapper } from "../../clients/mappers/WebsocketMapper";
 
 import { PterodactylServer } from "../../clients/models/pterodactyl/PterodactylServer";
 import { PterodactylWebsocket } from "../../clients/models/pterodactyl/PterodactylWebsocket";
 import { PterodactylStatistics } from "../../clients/models/pterodactyl/resources/PterodactylStatistics";
-import { PterodactylData } from "../../clients/models/PterodactylData";
 import { PterodactylObject } from "../../clients/models/PterodactylObject";
 
 import { Server } from "../../models/client/server/Server";
@@ -15,6 +11,10 @@ import { Websocket } from "../../models/client/Websocket";
 
 import { DalBase } from "../DalBase";
 import { PterodactylList } from "../../clients/models/PterodactylList";
+import { ServerMapper } from "../../clients/mappers/client/ServerMapper";
+import { WebsocketMapper } from "../../clients/mappers/client/WebsocketMapper";
+import { StatisticsMapper } from "../../clients/mappers/client/StatisticsMapper";
+import { PterodactylData } from "../../clients/models/PterodactylData";
 
 export class ServerDal extends DalBase {
     //#region Public methods

@@ -1,6 +1,6 @@
-import { Websocket } from "../../models/client/Websocket";
-import { PterodactylWebsocket } from "../models/pterodactyl/PterodactylWebsocket";
-import { PterodactylData } from "../models/PterodactylData";
+import { Websocket } from "../../../models/client/Websocket";
+import { PterodactylWebsocket } from "../../models/pterodactyl/PterodactylWebsocket";
+import { PterodactylData } from "../../models/PterodactylData";
 
 export class WebsocketMapper {
     /**
