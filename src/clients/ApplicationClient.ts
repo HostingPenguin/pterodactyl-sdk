@@ -1,3 +1,3 @@
-import { ApiClient } from "./ApiClient";
+import { ClientBase } from "./ClientBase";
 
-export class ApplicationClient extends ApiClient {}
+export class ApplicationClient extends ClientBase {}

@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from "axios";
-import { Credentials } from "./interfaces/Credentials";
-import { Options } from "./interfaces/Options";
+import { Credentials } from "../clients/interfaces/Credentials";
+import { Options } from "../clients/interfaces/Options";
 import { RestClient } from "./RestClient";
 
 const apiConfig: AxiosRequestConfig = {
@@ -11,19 +11,17 @@ const apiConfig: AxiosRequestConfig = {
     }
 };
 
-export class ApiClient {
-    protected options: Options;
+export class DalBase {
     protected credentials: Credentials;
+    protected options: Options;
     protected restClient: RestClient;
 
     /**
-     * Creates an instance of the api client.
+     * Creates an instance of the dal.
      * @param {Options} options
      * @param {Credentials} credentials
      */
     constructor(options: Options, credentials: Credentials) {
-        if (credentials.apiKey === undefined || credentials.apiKey.length === 0) throw new Error("Api key has to be provided for api client");
-
         this.options = options;
         this.credentials = credentials;
 

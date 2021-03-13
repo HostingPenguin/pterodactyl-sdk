@@ -15,16 +15,6 @@ test("Get server client", () => {
     expect(client.servers).toBeDefined();
 });
 
-test("Get servers", () => {
-    let client: Client = new Client(options, credentials);
-    return client
-        .getServers()
-        .then((servers) => {
-            expect(servers).toBeDefined;
-        })
-        .catch(fail);
-});
-
 test("Get permissions", () => {
     let client: Client = new Client(options, credentials);
     return client

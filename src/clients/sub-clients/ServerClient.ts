@@ -1,19 +1,15 @@
 import { Credentials } from "../interfaces/Credentials";
 import { Options } from "../interfaces/Options";
 import { Server } from "../../models/client/server/Server";
-import { ApiClient } from "../ApiClient";
-import { ServerMapper } from "../mappers/ServerMapper";
-import { PterodactylServer } from "../models/pterodactyl/PterodactylServer";
-import { PterodactylObject } from "../models/PterodactylObject";
-import { PterodactylData } from "../models/PterodactylData";
+import { ClientBase } from "../ClientBase";
 import { Websocket } from "../../models/client/Websocket";
-import { WebsocketMapper } from "../mappers/WebsocketMapper";
 import { Statistics } from "../../models/client/Statistics";
-import { PterodactylWebsocket } from "../models/pterodactyl/PterodactylWebsocket";
-import { PterodactylStatistics } from "../models/pterodactyl/resources/PterodactylStatistics";
-import { StatisticsMapper } from "../mappers/StatisticsMapper";
+import { PowerState } from "../../enums/PowerState";
+import { ServerDal } from "../../dal/client/ServerDal";
 
-export class ServerClient extends ApiClient {
+export class ServerClient extends ClientBase {
+    private serverDal: ServerDal;
+
     /**
      * Creates an instance of the client.
      * @param {Options} options
@@ -21,9 +17,19 @@ export class ServerClient extends ApiClient {
      */
     constructor(options: Options, credentials: Credentials) {
         super(options, credentials);
+
+        this.serverDal = new ServerDal(options, credentials);
     }
 
     //#region public methods
+
+    /**
+     * Gets all the servers.
+     * @returns List of all the servers.
+     */
+    public getServers(): Promise<Server[]> {
+        return this.serverDal.getServers();
+    }
 
     /**
      * Gets the details for a specific server.
@@ -31,10 +37,10 @@ export class ServerClient extends ApiClient {
      * @returns Server details.
      */
     public getServerDetails(id: string): Promise<Server> {
-        if (id === undefined) throw new Error("Id is undefind");
-        if (id.length === 0) throw new Error("Id cannot be empty");
+        if (id === undefined) throw new Error("Argument `id` is undefind");
+        if (id.length === 0) throw new Error("Argument `id` cannot be empty");
 
-        return this._getServerDetails(id);
+        return this.serverDal.getServerDetails(id);
     }
 
     /**
@@ -43,10 +49,10 @@ export class ServerClient extends ApiClient {
      * @returns Console details.
      */
     public getConsoleDetails(id: string): Promise<Websocket> {
-        if (id === undefined) throw new Error("Id is undefind");
-        if (id.length === 0) throw new Error("Id cannot be empty");
+        if (id === undefined) throw new Error("Argument `id` is undefind");
+        if (id.length === 0) throw new Error("Argument `id` cannot be empty");
 
-        return this._getConsoleDetails(id);
+        return this.serverDal.getConsoleDetails(id);
     }
 
     /**
@@ -55,68 +61,37 @@ export class ServerClient extends ApiClient {
      * @returns Statistics.
      */
     public getResourceUsage(id: string): Promise<Statistics> {
-        if (id === undefined) throw new Error("Id is undefind");
-        if (id.length === 0) throw new Error("Id cannot be empty");
+        if (id === undefined) throw new Error("Argument `id` is undefind");
+        if (id.length === 0) throw new Error("Argument `id` cannot be empty");
 
-        return this._getResourceUsage(id);
-    }
-
-    //#endregion
-
-    //#region private methods
-
-    /**
-     * Gets the server details.
-     * @param id The server identifier.
-     * @returns Server details.
-     */
-    private _getServerDetails(id: string): Promise<Server> {
-        return new Promise((resolve, reject) => {
-            this.restClient
-                .get<PterodactylObject<PterodactylServer>>(`/api/client/servers/${id}`)
-                .then((response) => {
-                    const pterodactylObject = response.data;
-                    const server = ServerMapper.mapToServer(pterodactylObject);
-                    resolve(server);
-                })
-                .catch(reject);
-        });
+        return this.serverDal.getResourceUsage(id);
     }
 
     /**
-     * Gets the server console details.
-     * @param id The server identifier.
-     * @returns Console details.
+     * Sends command to the specified server.
+     * @param {string} id The server identifier.
+     * @param {command} command The command.
      */
-    private _getConsoleDetails(id: string): Promise<Websocket> {
-        return new Promise((resolve, reject) => {
-            this.restClient
-                .get<PterodactylData<PterodactylWebsocket>>(`/api/client/servers/${id}/websocket`)
-                .then((response) => {
-                    const pterodactylData = response.data;
-                    const websocket = WebsocketMapper.mapToWebsocket(pterodactylData);
-                    resolve(websocket);
-                })
-                .catch(reject);
-        });
+    public sendCommand(id: string, command: string): Promise<any> {
+        if (id === undefined) throw new Error("Argument `id` is undefind");
+        if (id.length === 0) throw new Error("Argument `id` cannot be empty");
+        if (command === undefined) throw new Error("Argument `command` is undefind");
+        if (command.length === 0) throw new Error("Argument `command` cannot be empty");
+
+        return this.serverDal.sendCommand(id, command);
     }
 
     /**
-     * Gets the server resource usage.
-     * @param id The server identifier.
-     * @returns Statistics.
+     * Changes the power state of the specified server.
+     * @param {string} id The server identifier.
+     * @param {command} command The command.
      */
-    private _getResourceUsage(id: string): Promise<Statistics> {
-        return new Promise((resolve, reject) => {
-            this.restClient
-                .get<PterodactylObject<PterodactylStatistics>>(`/api/client/servers/${id}/resources`)
-                .then((response) => {
-                    const pterodactylData = response.data;
-                    const statistics = StatisticsMapper.mapToStatistics(pterodactylData);
-                    resolve(statistics);
-                })
-                .catch(reject);
-        });
+    public changePowerState(id: string, powerState: PowerState): Promise<any> {
+        if (id === undefined) throw new Error("Argument `id` is undefind");
+        if (id.length === 0) throw new Error("Argument `id` cannot be empty");
+        if (powerState === undefined) throw new Error("Argument `powerState` is undefind");
+
+        return this.serverDal.changePowerState(id, powerState);
     }
 
     //#endregion
