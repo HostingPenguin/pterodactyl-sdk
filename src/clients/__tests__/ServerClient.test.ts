@@ -24,7 +24,7 @@ test("Get servers", () => {
         .catch(fail);
 });
 
-test("Get server details", () => {
+test("Get server", () => {
     let serverClient: ServerClient = new ServerClient(options, credentials);
     return serverClient
         .getServers()
@@ -32,7 +32,7 @@ test("Get server details", () => {
             if (servers.length == 0) fail("Make sure API has access to at least one server");
 
             return serverClient
-                .getServerDetails(servers[0].identifier)
+                .getServer(servers[0].identifier)
                 .then((server) => {
                     expect(server.name).toBeDefined();
                     expect(server.uuid).toBeDefined();
@@ -42,10 +42,10 @@ test("Get server details", () => {
         .catch(fail);
 });
 
-test("Get server details", () => {
+test("Get server", () => {
     let serverClient: ServerClient = new ServerClient(options, credentials);
     return serverClient
-        .getServerDetails(TEST_SERVER_ID)
+        .getServer(TEST_SERVER_ID)
         .then((server) => {
             expect(server).toBeDefined();
             expect(server.identifier).toBeDefined();

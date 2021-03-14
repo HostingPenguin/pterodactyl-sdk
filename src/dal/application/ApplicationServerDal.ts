@@ -3,6 +3,7 @@ import { PterodactylList } from "../../clients/models/PterodactylList";
 import { ApplicationServer } from "../../models/application/server/ApplicationServer";
 import { PterodactylApplicationServer } from "../../clients/models/pterodactyl/PterodactylApplicationServer";
 import { ApplicationServerMapper } from "../../clients/mappers/application/ApplicationServerMapper";
+import { PterodactylObject } from "../../clients/models/PterodactylObject";
 
 export class ApplicationServerDal extends DalBase {
     //#region Public methods
@@ -38,6 +39,24 @@ export class ApplicationServerDal extends DalBase {
                 .catch((error) => {
                     reject(error);
                 });
+        });
+    }
+
+    /**
+     * Gets the server.
+     * @param id The server id.
+     * @returns Server details.
+     */
+    public getServer(id: number): Promise<ApplicationServer> {
+        return new Promise((resolve, reject) => {
+            this.restClient
+                .get<PterodactylObject<PterodactylApplicationServer>>(`/api/application/servers/${id}`)
+                .then((response) => {
+                    const pterodactylObject = response.data;
+                    const server = ApplicationServerMapper.mapToServer(pterodactylObject);
+                    resolve(server);
+                })
+                .catch(reject);
         });
     }
 

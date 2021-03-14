@@ -28,5 +28,17 @@ export class ApplicationServerClient extends ClientBase {
         return this.serverDal.getServers();
     }
 
+    /**
+     * Gets a specific server.
+     * @param {string} id The server id.
+     * @returns Server.
+     */
+    public getServer(id: number): Promise<ApplicationServer> {
+        if (id === undefined) throw new Error("Argument `id` is undefind");
+        if (id <= 0) throw new Error("Argument `id` cannot be empty");
+
+        return this.serverDal.getServer(id);
+    }
+
     //#endregion
 }

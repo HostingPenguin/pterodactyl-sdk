@@ -21,3 +21,13 @@ test("Get servers", () => {
         })
         .catch(fail);
 });
+
+test("Get server", () => {
+    let serverClient: ApplicationServerClient = new ApplicationServerClient(options, credentials);
+    return serverClient
+        .getServer(1)
+        .then((server) => {
+            expect(server).toBeDefined;
+        })
+        .catch(fail);
+});

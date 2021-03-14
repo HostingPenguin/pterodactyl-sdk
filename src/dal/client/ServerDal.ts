@@ -54,11 +54,11 @@ export class ServerDal extends DalBase {
     }
 
     /**
-     * Gets the server details.
+     * Gets the server.
      * @param id The server identifier.
-     * @returns Server details.
+     * @returns Server.
      */
-    public getServerDetails(id: string): Promise<Server> {
+    public getServer(id: string): Promise<Server> {
         return new Promise((resolve, reject) => {
             this.restClient
                 .get<PterodactylObject<PterodactylServer>>(`/api/client/servers/${id}`)

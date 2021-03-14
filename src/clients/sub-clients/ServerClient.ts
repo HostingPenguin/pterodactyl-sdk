@@ -32,15 +32,15 @@ export class ServerClient extends ClientBase {
     }
 
     /**
-     * Gets the details for a specific server.
+     * Gets  a specific server.
      * @param {string} id The server identifier.
-     * @returns Server details.
+     * @returns Server.
      */
-    public getServerDetails(id: string): Promise<Server> {
+    public getServer(id: string): Promise<Server> {
         if (id === undefined) throw new Error("Argument `id` is undefind");
         if (id.length === 0) throw new Error("Argument `id` cannot be empty");
 
-        return this.serverDal.getServerDetails(id);
+        return this.serverDal.getServer(id);
     }
 
     /**
