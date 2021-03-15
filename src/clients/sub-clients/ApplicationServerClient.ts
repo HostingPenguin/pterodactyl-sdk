@@ -30,7 +30,7 @@ export class ApplicationServerClient extends ClientBase {
 
     /**
      * Gets a specific server.
-     * @param {string} id The server id.
+     * @param {number} id The server id.
      * @returns Server.
      */
     public getServer(id: number): Promise<ApplicationServer> {
@@ -38,6 +38,18 @@ export class ApplicationServerClient extends ClientBase {
         if (id <= 0) throw new Error("Argument `id` cannot be empty");
 
         return this.serverDal.getServer(id);
+    }
+
+    /**
+     * Gets a specific server by external id.
+     * @param {string} id The server external id.
+     * @returns Server.
+     */
+    public getServerByExternalId(externalId: string): Promise<ApplicationServer> {
+        if (externalId === undefined) throw new Error("Argument `externalId` is undefind");
+        if (externalId.length <= 0) throw new Error("Argument `externalId` cannot be empty");
+
+        return this.serverDal.getServerByExternalId(externalId);
     }
 
     //#endregion

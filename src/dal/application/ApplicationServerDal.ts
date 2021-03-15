@@ -60,5 +60,23 @@ export class ApplicationServerDal extends DalBase {
         });
     }
 
+    /**
+     * Gets the server by external id.
+     * @param {string} externalId The server external id.
+     * @returns Server details.
+     */
+    public getServerByExternalId(externalId: string): Promise<ApplicationServer> {
+        return new Promise((resolve, reject) => {
+            this.restClient
+                .get<PterodactylObject<PterodactylApplicationServer>>(`/api/application/servers/external/${externalId}`)
+                .then((response) => {
+                    const pterodactylObject = response.data;
+                    const server = ApplicationServerMapper.mapToServer(pterodactylObject);
+                    resolve(server);
+                })
+                .catch(reject);
+        });
+    }
+
     //#endregion
 }

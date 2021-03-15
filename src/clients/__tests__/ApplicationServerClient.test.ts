@@ -31,3 +31,13 @@ test("Get server", () => {
         })
         .catch(fail);
 });
+
+test("Get server by external id", () => {
+    let serverClient: ApplicationServerClient = new ApplicationServerClient(options, credentials);
+    return serverClient
+        .getServerByExternalId("external-id")
+        .then((server) => {
+            expect(server).toBeDefined;
+        })
+        .catch(fail);
+});
