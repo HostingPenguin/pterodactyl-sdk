@@ -1,6 +1,12 @@
 import { ApplicationServer } from "../../../models/application/server/ApplicationServer";
+import { ServerBuildRequest } from "../../../models/requests/application/ServerBuildRequest";
+import { ServerDetailsRequest } from "../../../models/requests/application/ServerDetailsRequest";
+import { ServerStartupRequest } from "../../../models/requests/application/ServerStartupRequest";
 import { PterodactylApplicationServer } from "../../models/pterodactyl/PterodactylApplicationServer";
 import { PterodactylObject } from "../../models/PterodactylObject";
+import { PterodactylServerBuildRequest } from "../../models/requests/applications/PterodactylServerBuildRequest";
+import { PterodactylServerDetailsRequest } from "../../models/requests/applications/PterodactylServerDetailsRequest";
+import { PterodactylServerStartupRequest } from "../../models/requests/applications/PterodactylServerStartupRequest";
 import { RelationshipMapper } from "../RelationshipMapper";
 import { ContainerMapper } from "./ContainerMapper";
 
@@ -67,5 +73,59 @@ export class ApplicationServerMapper {
             servers.push(this.mapToServer(pterodactylServer));
         }
         return servers;
+    }
+
+    /**
+     * Maps the ServerDetailsRequest to the PterodactylServerDetailsRequest.
+     * @param {ServerDetailsRequest} object The request object.
+     * @returns {PterodactylServerDetailsRequest} The mapped object.
+     */
+    public static mapToPterodactylServerDetailsRequest(object: ServerDetailsRequest): PterodactylServerDetailsRequest {
+        const request: PterodactylServerDetailsRequest = {
+            name: object.name,
+            user: object.user,
+            external_id: object.externalId,
+            description: object.description
+        };
+        return request;
+    }
+
+    /**
+     * Maps the ServerBuildRequest to the PterodactylServerBuildRequest.
+     * @param {ServerBuildRequest} object The request object.
+     * @returns {PterodactylServerBuildRequest} The mapped object.
+     */
+    public static mapToPterodactylServerBuildRequest(object: ServerBuildRequest): PterodactylServerBuildRequest {
+        const request: PterodactylServerBuildRequest = {
+            allocation: object.allocation,
+            memory: object.memory,
+            swap: object.swap,
+            disk: object.disk,
+            io: object.io,
+            cpu: object.cpu,
+            threads: object.threads,
+            feature_limits: {
+                databases: object.featureLimits?.databases,
+                allocations: object.featureLimits?.allocations,
+                backups: object.featureLimits?.backups
+            }
+        };
+        return request;
+    }
+
+    /**
+     * Maps the ServerStartupRequest to the PterodactylServerStartupRequest.
+     * @param {ServerStartupRequest} object The request object.
+     * @returns {PterodactylServerStartupRequest} The mapped object.
+     */
+    public static mapToPterodactylServerStartupRequest(object: ServerStartupRequest): PterodactylServerStartupRequest {
+        const request: PterodactylServerStartupRequest = {
+            startup: object.startup,
+            environment: object.environment,
+            egg: object.egg,
+            image: object.image,
+            skip_scripts: object.skipScripts
+        };
+        return request;
     }
 }

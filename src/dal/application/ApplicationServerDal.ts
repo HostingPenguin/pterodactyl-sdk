@@ -4,6 +4,12 @@ import { ApplicationServer } from "../../models/application/server/ApplicationSe
 import { PterodactylApplicationServer } from "../../clients/models/pterodactyl/PterodactylApplicationServer";
 import { ApplicationServerMapper } from "../../clients/mappers/application/ApplicationServerMapper";
 import { PterodactylObject } from "../../clients/models/PterodactylObject";
+import { ServerDetailsRequest } from "../../models/requests/application/ServerDetailsRequest";
+import { ServerBuildRequest } from "../../models/requests/application/ServerBuildRequest";
+import { ServerStartupRequest } from "../../models/requests/application/ServerStartupRequest";
+import { PterodactylServerBuildRequest } from "../../clients/models/requests/applications/PterodactylServerBuildRequest";
+import { PterodactylServerStartupRequest } from "../../clients/models/requests/applications/PterodactylServerStartupRequest";
+import { PterodactylServerDetailsRequest } from "../../clients/models/requests/applications/PterodactylServerDetailsRequest";
 
 export class ApplicationServerDal extends DalBase {
     //#region Public methods
@@ -69,6 +75,66 @@ export class ApplicationServerDal extends DalBase {
         return new Promise((resolve, reject) => {
             this.restClient
                 .get<PterodactylObject<PterodactylApplicationServer>>(`/api/application/servers/external/${externalId}`)
+                .then((response) => {
+                    const pterodactylObject = response.data;
+                    const server = ApplicationServerMapper.mapToServer(pterodactylObject);
+                    resolve(server);
+                })
+                .catch(reject);
+        });
+    }
+
+    /**
+     * Updates the server details.
+     * @param {number} serverId The server id.
+     * @param {ServerDetailsRequest} detailsRequest The server details.
+     * @returns Server.
+     */
+    public updateDetails(serverId: number, detailsRequest: ServerDetailsRequest): Promise<ApplicationServer> {
+        return new Promise((resolve, reject) => {
+            const request = ApplicationServerMapper.mapToPterodactylServerDetailsRequest(detailsRequest);
+            this.restClient
+                .patch<PterodactylObject<PterodactylApplicationServer>, PterodactylServerDetailsRequest>(`/api/application/servers/${serverId}`, request)
+                .then((response) => {
+                    const pterodactylObject = response.data;
+                    const server = ApplicationServerMapper.mapToServer(pterodactylObject);
+                    resolve(server);
+                })
+                .catch(reject);
+        });
+    }
+
+    /**
+     * Updates the server build.
+     * @param {number} serverId The server id.
+     * @param {ServerBuildRequest} buildRequest The server build.
+     * @returns Server.
+     */
+    public updateBuild(serverId: number, buildRequest: ServerBuildRequest): Promise<ApplicationServer> {
+        return new Promise((resolve, reject) => {
+            const request = ApplicationServerMapper.mapToPterodactylServerBuildRequest(buildRequest);
+            this.restClient
+                .patch<PterodactylObject<PterodactylApplicationServer>, PterodactylServerBuildRequest>(`/api/application/servers/${serverId}`, request)
+                .then((response) => {
+                    const pterodactylObject = response.data;
+                    const server = ApplicationServerMapper.mapToServer(pterodactylObject);
+                    resolve(server);
+                })
+                .catch(reject);
+        });
+    }
+
+    /**
+     * Updates the server startup.
+     * @param {number} serverId The server id.
+     * @param {ServerStartupRequest} startupRequest The server startup.
+     * @returns Server.
+     */
+    public updateStartup(serverId: number, startupRequest: ServerStartupRequest): Promise<ApplicationServer> {
+        return new Promise((resolve, reject) => {
+            const request = ApplicationServerMapper.mapToPterodactylServerStartupRequest(startupRequest);
+            this.restClient
+                .patch<PterodactylObject<PterodactylApplicationServer>, PterodactylServerStartupRequest>(`/api/application/servers/${serverId}`, request)
                 .then((response) => {
                     const pterodactylObject = response.data;
                     const server = ApplicationServerMapper.mapToServer(pterodactylObject);
