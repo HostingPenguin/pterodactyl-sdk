@@ -1,0 +1,19 @@
+{
+    "name": "simple-usage",
+    "version": "1.0.0",
+    "description": "A project that shows a simple usage of @hostingpengu.in/pterodactyl-sdk",
+    "main": "lib/index.js",
+    "scripts": {
+        "start": "node lib/index.js",
+        "build": "tsc"
+    },
+    "author": "Bram Hoven",
+    "license": "MIT",
+    "dependencies": {
+        "@hostingpengu.in/pterodactyl-sdk": "file:../../"
+    },
+    "devDependencies": {
+        "dotenv": "^8.2.0",
+        "typescript": "^4.2.3"
+    }
+}
