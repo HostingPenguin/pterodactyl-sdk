@@ -1,21 +1,44 @@
 version: 2.1
 orbs:
-    node: circleci/node@12.18.4
+    node: circleci/node@4.2.0
 jobs:
     install:
-        docker:
-            - image: "cimg/base:stable"
+        working_directory: ~/pterodactyl-sdk
+        executor:
+            name: node/default
+            tag: "12.18.4"
         steps:
             - checkout
-            - node/install
+            - node/install:
                 install-npm: false
                 install-yarn: true
-            - node/test
+            - node/install-packages:
+                app-dir: ~/pterodactyl-sdk
+                cache-path: node_modules
                 pkg-manager: yarn
-                run-command: test:coverage
+                override-ci-command: yarn install --frozen-lockfile --dev
+            - persist_to_workspace:
+                root: .
+                paths:
+                    - .
+    coverage:
+        executor:
+            name: node/default
+            tag: "12.18.4"
+        steps:
+            - attach_workspace:
+                at: .
+            - run:
+                name: "Run Jest and Collect Coverage Reports"
+                command: yarn test:coverage
             - store_artifacts:
                 path: coverage
 workflows:
-    node-tests:
+    coverage:
         jobs:
-            - coverage
+            - install
+            - coverage:
+                context:
+                    - Pterodactyl-sdk test
+                requires:
+                    - install
