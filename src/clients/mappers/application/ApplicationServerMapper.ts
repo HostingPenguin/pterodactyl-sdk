@@ -83,10 +83,12 @@ export class ApplicationServerMapper {
     public static mapToPterodactylServerDetailsRequest(object: ServerDetailsRequest): PterodactylServerDetailsRequest {
         const request: PterodactylServerDetailsRequest = {
             name: object.name,
-            user: object.user,
-            external_id: object.externalId,
-            description: object.description
+            user: object.user
         };
+
+        if (object.externalId) request.external_id = object.externalId;
+        if (object.description) request.description = object.description;
+
         return request;
     }
 

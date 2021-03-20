@@ -1,3 +1,4 @@
+import { ServerDetailsRequest } from "../../models/requests/application/ServerDetailsRequest";
 import { Credentials } from "../interfaces/Credentials";
 import { Options } from "../interfaces/Options";
 import { ApplicationServerClient } from "../sub-clients/ApplicationServerClient";
@@ -38,6 +39,42 @@ test("Get server by external id", () => {
         .getServerByExternalId("external-id")
         .then((server) => {
             expect(server).toBeDefined;
+        })
+        .catch(fail);
+});
+
+test("Update server details", () => {
+    const serverClient: ApplicationServerClient = new ApplicationServerClient(options, credentials);
+    const serverId = 1;
+
+    return serverClient
+        .getServer(serverId)
+        .then((server) => {
+            const serverName = server.name;
+            const newServerName = "New test name";
+
+            let request: ServerDetailsRequest = {
+                name: newServerName,
+                user: server.user
+            };
+
+            return serverClient
+                .updateDetails(serverId, request)
+                .then((server) => {
+                    expect(server.name).toBe(newServerName);
+                    request.name = serverName;
+
+                    return serverClient
+                        .updateDetails(serverId, request)
+                        .then((server) => {
+                            expect(server.name).toBe(serverName);
+                        })
+                        .catch(fail);
+                })
+                .catch((err) => {
+                    console.log(err.response.data);
+                    fail(err);
+                });
         })
         .catch(fail);
 });

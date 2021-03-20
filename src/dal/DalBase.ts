@@ -8,7 +8,8 @@ const apiConfig: AxiosRequestConfig = {
     headers: {
         "Content-Type": "application/json",
         Accept: "application/json"
-    }
+    },
+    crossDomain: true
 };
 
 export class DalBase {
