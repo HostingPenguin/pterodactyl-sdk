@@ -5,7 +5,7 @@ export interface PterodactylServerBuildRequest {
     disk: number;
     io: number;
     cpu: number;
-    threads: number;
+    threads?: number;
     feature_limits: {
         databases: number;
         allocations: number;

@@ -1,5 +1,6 @@
 import { ServerBuildRequest } from "../../models/requests/application/ServerBuildRequest";
 import { ServerDetailsRequest } from "../../models/requests/application/ServerDetailsRequest";
+import { ServerStartupRequest } from "../../models/requests/application/ServerStartupRequest";
 import { Credentials } from "../interfaces/Credentials";
 import { Options } from "../interfaces/Options";
 import { ApplicationServerClient } from "../sub-clients/ApplicationServerClient";
@@ -10,12 +11,12 @@ const credentials: Credentials = { apiKey: process.env.APPLICATION_API_KEY };
 const TEST_SERVER_ID = process.env.TEST_SERVER_ID as string;
 
 test("Initialize server client", () => {
-    let serverClient: ApplicationServerClient = new ApplicationServerClient(options, credentials);
+    const serverClient: ApplicationServerClient = new ApplicationServerClient(options, credentials);
     expect(serverClient).toBeDefined();
 });
 
 test("Get servers", () => {
-    let serverClient: ApplicationServerClient = new ApplicationServerClient(options, credentials);
+    const serverClient: ApplicationServerClient = new ApplicationServerClient(options, credentials);
     return serverClient
         .getServers()
         .then((servers) => {
@@ -25,7 +26,7 @@ test("Get servers", () => {
 });
 
 test("Get server", () => {
-    let serverClient: ApplicationServerClient = new ApplicationServerClient(options, credentials);
+    const serverClient: ApplicationServerClient = new ApplicationServerClient(options, credentials);
     return serverClient
         .getServer(1)
         .then((server) => {
@@ -34,14 +35,24 @@ test("Get server", () => {
         .catch(fail);
 });
 
+test("Fail getting server by id", () => {
+    const serverClient: ApplicationServerClient = new ApplicationServerClient(options, credentials);
+    return expect(serverClient.getServer(0)).rejects.toThrowError("Argument `id` cannot be empty");
+});
+
 test("Get server by external id", () => {
-    let serverClient: ApplicationServerClient = new ApplicationServerClient(options, credentials);
+    const serverClient: ApplicationServerClient = new ApplicationServerClient(options, credentials);
     return serverClient
         .getServerByExternalId("external-id")
         .then((server) => {
             expect(server).toBeDefined;
         })
         .catch(fail);
+});
+
+test("Fail getting server by external id", () => {
+    const serverClient: ApplicationServerClient = new ApplicationServerClient(options, credentials);
+    return expect(serverClient.getServerByExternalId("")).rejects.toThrowError("Argument `externalId` cannot be empty");
 });
 
 test("Update server details", () => {
@@ -56,7 +67,9 @@ test("Update server details", () => {
 
             let request: ServerDetailsRequest = {
                 name: newServerName,
-                user: server.user
+                user: server.user,
+                externalId: server.externalId,
+                description: server.description
             };
 
             return serverClient
@@ -100,6 +113,42 @@ test("Update server build", () => {
             };
 
             return serverClient.updateBuild(serverId, request).catch(fail);
+        })
+        .catch(fail);
+});
+
+test("Update server startup", () => {
+    const serverClient: ApplicationServerClient = new ApplicationServerClient(options, credentials);
+    const serverId = 1;
+
+    return serverClient
+        .getServer(serverId)
+        .then((server) => {
+            const startupCommand = server.container.startupCommand;
+            const newStartupCommand = "test command";
+
+            let request: ServerStartupRequest = {
+                egg: server.egg,
+                environment: server.container.environment,
+                image: server.container.image,
+                skipScripts: false,
+                startup: newStartupCommand
+            };
+
+            return serverClient
+                .updateStartup(serverId, request)
+                .then((server) => {
+                    expect(server.container.startupCommand).toBe(newStartupCommand);
+                    request.startup = startupCommand;
+
+                    return serverClient
+                        .updateStartup(serverId, request)
+                        .then((server) => {
+                            expect(server.container.startupCommand).toBe(startupCommand);
+                        })
+                        .catch(fail);
+                })
+                .catch(fail);
         })
         .catch(fail);
 });

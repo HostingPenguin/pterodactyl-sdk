@@ -37,10 +37,11 @@ export class ApplicationServerClient extends ClientBase {
      * @returns Server.
      */
     public getServer(id: number): Promise<ApplicationServer> {
-        if (id === undefined) throw new Error("Argument `id` is undefind");
-        if (id <= 0) throw new Error("Argument `id` cannot be empty");
+        return new Promise((resolve, reject) => {
+            if (id <= 0) throw new Error("Argument `id` cannot be empty");
 
-        return this.serverDal.getServer(id);
+            this.serverDal.getServer(id).then(resolve).catch(reject);
+        });
     }
 
     /**
@@ -49,10 +50,11 @@ export class ApplicationServerClient extends ClientBase {
      * @returns Server.
      */
     public getServerByExternalId(externalId: string): Promise<ApplicationServer> {
-        if (externalId === undefined) throw new Error("Argument `externalId` is undefind");
-        if (externalId.length <= 0) throw new Error("Argument `externalId` cannot be empty");
+        return new Promise((resolve, reject) => {
+            if (externalId.length <= 0) throw new Error("Argument `externalId` cannot be empty");
 
-        return this.serverDal.getServerByExternalId(externalId);
+            this.serverDal.getServerByExternalId(externalId).then(resolve).catch(reject);
+        });
     }
 
     /**
@@ -62,8 +64,6 @@ export class ApplicationServerClient extends ClientBase {
      * @returns Server.
      */
     public updateDetails(serverId: number, detailsRequest: ServerDetailsRequest): Promise<ApplicationServer> {
-        if (detailsRequest === undefined) throw new Error("Argument `detailsRequest` is undefind");
-
         return this.serverDal.updateDetails(serverId, detailsRequest);
     }
 
@@ -74,8 +74,6 @@ export class ApplicationServerClient extends ClientBase {
      * @returns Server.
      */
     public updateBuild(serverId: number, buildRequest: ServerBuildRequest): Promise<ApplicationServer> {
-        if (buildRequest === undefined) throw new Error("Argument `buildRequest` is undefind");
-
         return this.serverDal.updateBuild(serverId, buildRequest);
     }
 
@@ -86,8 +84,6 @@ export class ApplicationServerClient extends ClientBase {
      * @returns Server.
      */
     public updateStartup(serverId: number, startupRequest: ServerStartupRequest): Promise<ApplicationServer> {
-        if (startupRequest === undefined) throw new Error("Argument `startupRequest` is undefind");
-
         return this.serverDal.updateStartup(serverId, startupRequest);
     }
 

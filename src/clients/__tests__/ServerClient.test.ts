@@ -10,12 +10,12 @@ const credentials: Credentials = { apiKey: process.env.CLIENT_API_KEY };
 const TEST_SERVER_ID = process.env.TEST_SERVER_ID as string;
 
 test("Initialize server client", () => {
-    let serverClient: ServerClient = new ServerClient(options, credentials);
+    const serverClient: ServerClient = new ServerClient(options, credentials);
     expect(serverClient).toBeDefined();
 });
 
 test("Get servers", () => {
-    let serverClient: ServerClient = new ServerClient(options, credentials);
+    const serverClient: ServerClient = new ServerClient(options, credentials);
     return serverClient
         .getServers()
         .then((servers) => {
@@ -25,7 +25,7 @@ test("Get servers", () => {
 });
 
 test("Get server", () => {
-    let serverClient: ServerClient = new ServerClient(options, credentials);
+    const serverClient: ServerClient = new ServerClient(options, credentials);
     return serverClient
         .getServers()
         .then((servers) => {
@@ -42,8 +42,8 @@ test("Get server", () => {
         .catch(fail);
 });
 
-test("Get server", () => {
-    let serverClient: ServerClient = new ServerClient(options, credentials);
+test("Get server by id", () => {
+    const serverClient: ServerClient = new ServerClient(options, credentials);
     return serverClient
         .getServer(TEST_SERVER_ID)
         .then((server) => {
@@ -53,8 +53,13 @@ test("Get server", () => {
         .catch(fail);
 });
 
+test("Fail get server by id", () => {
+    const serverClient: ServerClient = new ServerClient(options, credentials);
+    return expect(serverClient.getServer("")).rejects.toThrowError("Argument `id` cannot be empty");
+});
+
 test("Get console details", () => {
-    let serverClient: ServerClient = new ServerClient(options, credentials);
+    const serverClient: ServerClient = new ServerClient(options, credentials);
     return serverClient
         .getConsoleDetails(TEST_SERVER_ID)
         .then((websocket) => {
@@ -65,8 +70,13 @@ test("Get console details", () => {
         .catch(fail);
 });
 
+test("Fail get console details", () => {
+    const serverClient: ServerClient = new ServerClient(options, credentials);
+    return expect(serverClient.getConsoleDetails("")).rejects.toThrowError("Argument `id` cannot be empty");
+});
+
 test("Get resource usage", () => {
-    let serverClient: ServerClient = new ServerClient(options, credentials);
+    const serverClient: ServerClient = new ServerClient(options, credentials);
     return serverClient
         .getResourceUsage(TEST_SERVER_ID)
         .then((statistics) => {
@@ -78,13 +88,28 @@ test("Get resource usage", () => {
         .catch(fail);
 });
 
+test("Fail get resource usage", () => {
+    const serverClient: ServerClient = new ServerClient(options, credentials);
+    return expect(serverClient.getResourceUsage("")).rejects.toThrowError("Argument `id` cannot be empty");
+});
+
 test("Send command", () => {
-    let serverClient: ServerClient = new ServerClient(options, credentials);
+    const serverClient: ServerClient = new ServerClient(options, credentials);
     return serverClient.sendCommand(TEST_SERVER_ID, "help").catch(fail);
 });
 
+test("Fail send command {id}", () => {
+    const serverClient: ServerClient = new ServerClient(options, credentials);
+    return expect(serverClient.sendCommand("", "help")).rejects.toThrowError("Argument `id` cannot be empty");
+});
+
+test("Fail send command {command}", () => {
+    const serverClient: ServerClient = new ServerClient(options, credentials);
+    return expect(serverClient.sendCommand(TEST_SERVER_ID, "")).rejects.toThrowError("Argument `command` cannot be empty");
+});
+
 test("Change power state", () => {
-    let serverClient: ServerClient = new ServerClient(options, credentials);
+    const serverClient: ServerClient = new ServerClient(options, credentials);
     return serverClient
         .changePowerState(TEST_SERVER_ID, PowerState.KILL)
         .then(() => {
@@ -95,4 +120,9 @@ test("Change power state", () => {
             });
         })
         .catch(fail);
+});
+
+test("Fail change power state {id}", () => {
+    const serverClient: ServerClient = new ServerClient(options, credentials);
+    return expect(serverClient.changePowerState("", PowerState.KILL)).rejects.toThrowError("Argument `id` cannot be empty");
 });

@@ -37,10 +37,11 @@ export class ServerClient extends ClientBase {
      * @returns Server.
      */
     public getServer(id: string): Promise<Server> {
-        if (id === undefined) throw new Error("Argument `id` is undefind");
-        if (id.length === 0) throw new Error("Argument `id` cannot be empty");
+        return new Promise((resolve, reject) => {
+            if (id.length === 0) throw new Error("Argument `id` cannot be empty");
 
-        return this.serverDal.getServer(id);
+            this.serverDal.getServer(id).then(resolve).catch(reject);
+        });
     }
 
     /**
@@ -49,10 +50,11 @@ export class ServerClient extends ClientBase {
      * @returns Console details.
      */
     public getConsoleDetails(id: string): Promise<Websocket> {
-        if (id === undefined) throw new Error("Argument `id` is undefind");
-        if (id.length === 0) throw new Error("Argument `id` cannot be empty");
+        return new Promise((resolve, reject) => {
+            if (id.length === 0) throw new Error("Argument `id` cannot be empty");
 
-        return this.serverDal.getConsoleDetails(id);
+            this.serverDal.getConsoleDetails(id).then(resolve).catch(reject);
+        });
     }
 
     /**
@@ -61,10 +63,11 @@ export class ServerClient extends ClientBase {
      * @returns Statistics.
      */
     public getResourceUsage(id: string): Promise<Statistics> {
-        if (id === undefined) throw new Error("Argument `id` is undefind");
-        if (id.length === 0) throw new Error("Argument `id` cannot be empty");
+        return new Promise((resolve, reject) => {
+            if (id.length === 0) throw new Error("Argument `id` cannot be empty");
 
-        return this.serverDal.getResourceUsage(id);
+            this.serverDal.getResourceUsage(id).then(resolve).catch(reject);
+        });
     }
 
     /**
@@ -73,12 +76,12 @@ export class ServerClient extends ClientBase {
      * @param {command} command The command.
      */
     public sendCommand(id: string, command: string): Promise<any> {
-        if (id === undefined) throw new Error("Argument `id` is undefind");
-        if (id.length === 0) throw new Error("Argument `id` cannot be empty");
-        if (command === undefined) throw new Error("Argument `command` is undefind");
-        if (command.length === 0) throw new Error("Argument `command` cannot be empty");
+        return new Promise((resolve, reject) => {
+            if (id.length === 0) throw new Error("Argument `id` cannot be empty");
+            if (command.length === 0) throw new Error("Argument `command` cannot be empty");
 
-        return this.serverDal.sendCommand(id, command);
+            this.serverDal.sendCommand(id, command).then(resolve).then(reject);
+        });
     }
 
     /**
@@ -87,11 +90,11 @@ export class ServerClient extends ClientBase {
      * @param {command} command The command.
      */
     public changePowerState(id: string, powerState: PowerState): Promise<any> {
-        if (id === undefined) throw new Error("Argument `id` is undefind");
-        if (id.length === 0) throw new Error("Argument `id` cannot be empty");
-        if (powerState === undefined) throw new Error("Argument `powerState` is undefind");
+        return new Promise((resolve, reject) => {
+            if (id.length === 0) throw new Error("Argument `id` cannot be empty");
 
-        return this.serverDal.changePowerState(id, powerState);
+            this.serverDal.changePowerState(id, powerState).then(resolve).catch(reject);
+        });
     }
 
     //#endregion

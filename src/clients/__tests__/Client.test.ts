@@ -10,6 +10,10 @@ test("Initialize client", () => {
     expect(client).toBeDefined();
 });
 
+test("Fail initialize client", () => {
+    expect(new Client(options, { apiKey: "" })).toThrowError("Api key has to be provided for api client");
+});
+
 test("Get server client", () => {
     let client: Client = new Client(options, credentials);
     expect(client.servers).toBeDefined();
