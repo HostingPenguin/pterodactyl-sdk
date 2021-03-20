@@ -10,6 +10,7 @@
   <a href="https://github.com/HostingPenguin/pterodactyl-sdk/blob/master/LICENSE" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/github/license/HostingPenguin/pterodactyl-sdk" />
   </a>
+  <img alt="Build status" src="https://circleci.com/gh/HostingPenguin/pterodactyl-sdk.svg?style=shield&circle-token=33364d974d6dbfc149a3f8cf0b73d8a19dc5b9d6" />
 </p>
 
 > A sdk for the Pterodactyl game panel software
