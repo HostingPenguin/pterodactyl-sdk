@@ -3,6 +3,7 @@ orbs:
     node: circleci/node@4.2.0
 jobs:
     install:
+        working_directory: ~/pterodactyl-sdk
         executor:
             name: node/default
             tag: "12.18.4"
@@ -12,14 +13,21 @@ jobs:
                 install-npm: false
                 install-yarn: true
             - node/install-packages:
+                app-dir: ~/pterodactyl-sdk
+                cache-path: node_modules
                 pkg-manager: yarn
                 override-ci-command: yarn install --frozen-lockfile --dev
+            - persist_to_workspace:
+                root: .
+                paths:
+                    - .
     coverage:
         executor:
             name: node/default
             tag: "12.18.4"
         steps:
-            - checkout
+            - attach_workspace:
+                at: .
             - run:
                 name: "Run Jest and Collect Coverage Reports"
                 command: yarn test:coverage
