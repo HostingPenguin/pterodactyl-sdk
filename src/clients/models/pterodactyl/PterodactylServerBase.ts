@@ -14,6 +14,7 @@ export interface PterodactylServerBase {
         disk: number;
         io: number;
         cpu: number;
+        threads?: number;
     };
     invocation: string;
     docker_image: string;

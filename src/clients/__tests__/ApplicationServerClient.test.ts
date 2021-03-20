@@ -1,3 +1,4 @@
+import { ServerBuildRequest } from "../../models/requests/application/ServerBuildRequest";
 import { ServerDetailsRequest } from "../../models/requests/application/ServerDetailsRequest";
 import { Credentials } from "../interfaces/Credentials";
 import { Options } from "../interfaces/Options";
@@ -71,10 +72,34 @@ test("Update server details", () => {
                         })
                         .catch(fail);
                 })
-                .catch((err) => {
-                    console.log(err.response.data);
-                    fail(err);
-                });
+                .catch(fail);
+        })
+        .catch(fail);
+});
+
+test("Update server build", () => {
+    const serverClient: ApplicationServerClient = new ApplicationServerClient(options, credentials);
+    const serverId = 1;
+
+    return serverClient
+        .getServer(serverId)
+        .then((server) => {
+            let request: ServerBuildRequest = {
+                allocation: server.allocation,
+                cpu: server.limits.cpu,
+                disk: server.limits.disk,
+                featureLimits: {
+                    allocations: server.featureLimits.allocations,
+                    backups: server.featureLimits.backups,
+                    databases: server.featureLimits.databases
+                },
+                io: server.limits.io,
+                memory: server.limits.memory,
+                swap: server.limits.swap,
+                threads: server.limits.threads
+            };
+
+            return serverClient.updateBuild(serverId, request).catch(fail);
         })
         .catch(fail);
 });

@@ -4,4 +4,5 @@ export interface HardwareLimits {
     disk: number;
     io: number;
     cpu: number;
+    threads?: number;
 }

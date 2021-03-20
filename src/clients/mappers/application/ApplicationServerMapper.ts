@@ -32,7 +32,8 @@ export class ApplicationServerMapper {
                 swap: pterodactylServer.limits.swap,
                 disk: pterodactylServer.limits.disk,
                 io: pterodactylServer.limits.io,
-                cpu: pterodactylServer.limits.cpu
+                cpu: pterodactylServer.limits.cpu,
+                threads: pterodactylServer.limits.threads
             },
             invocation: pterodactylServer.invocation,
             egg_features: pterodactylServer.egg_features,

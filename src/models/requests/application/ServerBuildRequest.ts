@@ -5,7 +5,7 @@ export interface ServerBuildRequest {
     disk: number;
     io: number;
     cpu: number;
-    threads: number;
+    threads?: number;
     featureLimits: {
         databases: number;
         allocations: number;
