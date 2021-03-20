@@ -13,6 +13,7 @@ jobs:
                 install-yarn: true
             - node/install-packages:
                 pkg-manager: yarn
+                override-ci-command: yarn install --frozen-lockfile --dev
     coverage:
         executor:
             name: node/default
