@@ -1,0 +1,18 @@
+version: 2.1
+jobs:
+  coverage:
+    docker:
+      - image: circleci/node:10.0-browsers
+    steps:
+      - checkout
+      - run: yarn
+      - run:
+          name: "Run Jest and Collect Coverage Reports"
+          command: "yarn test:coverage"
+      - store_artifacts:
+          path: coverage
+
+workflows:
+  node-tests:
+    jobs:
+      - coverage
