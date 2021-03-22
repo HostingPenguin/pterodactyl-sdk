@@ -11,6 +11,6 @@ export interface ApplicationServer extends ServerBase {
     egg: number;
     pack: number | null;
     container: Container;
-    updatedAt: Date;
-    createdAt: Date;
+    updatedAt?: Date;
+    createdAt?: Date;
 }

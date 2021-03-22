@@ -1,5 +1,8 @@
+import { ApplicationServer } from "../../models/application/server/ApplicationServer";
+import { FeatureLimits } from "../../models/client/server/FeatureLimits";
 import { ServerBuildRequest } from "../../models/requests/application/ServerBuildRequest";
 import { ServerDetailsRequest } from "../../models/requests/application/ServerDetailsRequest";
+import { ServerRequest } from "../../models/requests/application/ServerRequest";
 import { ServerStartupRequest } from "../../models/requests/application/ServerStartupRequest";
 import { Credentials } from "../interfaces/Credentials";
 import { Options } from "../interfaces/Options";
@@ -149,6 +152,44 @@ test("Update server startup", () => {
                         .catch(fail);
                 })
                 .catch(fail);
+        })
+        .catch(fail);
+});
+
+test("Create server", () => {
+    const serverClient: ApplicationServerClient = new ApplicationServerClient(options, credentials);
+    const server: ServerRequest = {
+        allocation: {
+            default: 55
+        },
+        dockerImage: "quay.io/pterodactyl/core:java",
+        user: 1,
+        featureLimits: {
+            allocations: 1,
+            backups: 1,
+            databases: 1
+        },
+        egg: 1,
+        environment: {
+            BUNGEE_VERSION: "latest",
+            SERVER_JARFILE: "server.jar"
+        },
+        limits: {
+            cpu: 100,
+            disk: 10000,
+            io: 500,
+            memory: 3072,
+            swap: 0
+        },
+        name: "Test server",
+        startup: "test startup"
+    };
+
+    return serverClient
+        .createServer(server)
+        .then((server) => {
+            expect(server).toBeDefined();
+            //TODO: Delete created server
         })
         .catch(fail);
 });

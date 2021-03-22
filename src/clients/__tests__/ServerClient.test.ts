@@ -32,7 +32,7 @@ test("Get server", () => {
             if (servers.length == 0) fail("Make sure API has access to at least one server");
 
             return serverClient
-                .getServer(servers[0].identifier)
+                .getServer(servers[0].identifier ?? "")
                 .then((server) => {
                     expect(server.name).toBeDefined();
                     expect(server.uuid).toBeDefined();

@@ -16,4 +16,18 @@ export class ContainerMapper {
         };
         return container;
     }
+
+    /**
+     * Maps a Container model to a Pterodactyl container object.
+     * @param object the object.
+     * @returns
+     */
+    public static mapToPterodactylContainer(object: Container): PterodactylContainer {
+        const container: PterodactylContainer = {
+            startup_command: object.startupCommand,
+            image: object.image,
+            environment: object.environment
+        };
+        return container;
+    }
 }

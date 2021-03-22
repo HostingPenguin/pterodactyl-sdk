@@ -31,8 +31,8 @@ export class ServerMapper {
                 cpu: pterodactylServer.limits.cpu
             },
             invocation: pterodactylServer.invocation,
-            egg_features: pterodactylServer.egg_features,
-            docker_image: pterodactylServer.docker_image,
+            eggFeatures: pterodactylServer.egg_features,
+            dockerImage: pterodactylServer.docker_image,
             featureLimits: {
                 databases: pterodactylServer.feature_limits.databases,
                 allocations: pterodactylServer.feature_limits.allocations,

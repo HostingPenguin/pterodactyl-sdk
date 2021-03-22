@@ -10,6 +10,8 @@ import { ServerStartupRequest } from "../../models/requests/application/ServerSt
 import { PterodactylServerBuildRequest } from "../../clients/models/requests/applications/PterodactylServerBuildRequest";
 import { PterodactylServerStartupRequest } from "../../clients/models/requests/applications/PterodactylServerStartupRequest";
 import { PterodactylServerDetailsRequest } from "../../clients/models/requests/applications/PterodactylServerDetailsRequest";
+import { ServerRequest } from "../../models/requests/application/ServerRequest";
+import { PterodactylServerRequest } from "../../clients/models/requests/applications/PterodactylServerRequest";
 
 export class ApplicationServerDal extends DalBase {
     //#region Public methods
@@ -141,6 +143,25 @@ export class ApplicationServerDal extends DalBase {
                     `/api/application/servers/${serverId}/startup`,
                     request
                 )
+                .then((response) => {
+                    const pterodactylObject = response.data;
+                    const server = ApplicationServerMapper.mapToServer(pterodactylObject);
+                    resolve(server);
+                })
+                .catch(reject);
+        });
+    }
+
+    /**
+     * Creates a new server.
+     * @param {ServerRequest} server The server to create.
+     * @returns The newly created server.
+     */
+    public createServer(server: ServerRequest): Promise<ApplicationServer> {
+        return new Promise((resolve, reject) => {
+            const request = ApplicationServerMapper.mapToPterodactylServerRequest(server);
+            this.restClient
+                .post<PterodactylObject<PterodactylApplicationServer>, PterodactylServerRequest>(`/api/application/servers`, request)
                 .then((response) => {
                     const pterodactylObject = response.data;
                     const server = ApplicationServerMapper.mapToServer(pterodactylObject);

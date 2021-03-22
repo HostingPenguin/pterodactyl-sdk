@@ -1,7 +1,9 @@
 import { ApplicationServerDal } from "../../dal/application/ApplicationServerDal";
 import { ApplicationServer } from "../../models/application/server/ApplicationServer";
+import { Server } from "../../models/client/server/Server";
 import { ServerBuildRequest } from "../../models/requests/application/ServerBuildRequest";
 import { ServerDetailsRequest } from "../../models/requests/application/ServerDetailsRequest";
+import { ServerRequest } from "../../models/requests/application/ServerRequest";
 import { ServerStartupRequest } from "../../models/requests/application/ServerStartupRequest";
 import { ClientBase } from "../ClientBase";
 import { Credentials } from "../interfaces/Credentials";
@@ -85,6 +87,15 @@ export class ApplicationServerClient extends ClientBase {
      */
     public updateStartup(serverId: number, startupRequest: ServerStartupRequest): Promise<ApplicationServer> {
         return this.serverDal.updateStartup(serverId, startupRequest);
+    }
+
+    /**
+     * Creates a new server.
+     * @param {ServerRequest} server The server to create.
+     * @returns The newly created server.
+     */
+    public createServer(serverRequest: ServerRequest): Promise<ApplicationServer> {
+        return this.serverDal.createServer(serverRequest);
     }
 
     //#endregion

@@ -1,6 +1,6 @@
 export interface ServerStartupRequest {
     startup: string;
-    environment: Map<string, string>;
+    environment: object;
     egg: number;
     image: string;
     skipScripts: boolean;
